@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "44461910225",
+    "project_id": "realtimemonitoring-3a45f",
+    "storage_bucket": "realtimemonitoring-3a45f.firebasestorage.app",
+    "firebase_url": "https://realtimemonitoring-3a45f-default-rtdb.asia-southeast1.firebasedatabase.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44461910225:android:584a3cb7afcf8faf4e3df0",
+        "android_client_info": {
+          "package_name": "com.example.fyp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWOtlyMRwis1oXx9tJcD2Ewcv66-4mmkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
