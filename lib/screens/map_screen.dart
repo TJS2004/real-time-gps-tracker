@@ -7,15 +7,24 @@ import 'package:firebase_database/firebase_database.dart';
 import 'saved_locations_screen.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
+  final String userId;
+  const MapScreen({super.key, required this.userId});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
-  final DatabaseReference _dbRef =
-  FirebaseDatabase.instance.ref("users/user1/locations");
+
+  // Use the widget.userId for the locations reference
+  late final DatabaseReference _dbRef = FirebaseDatabase.instance.ref(
+      "users/${widget.userId}/locations" // <-- Dynamic path
+  );
+
+  // Use the widget.userId for the user root reference
+  late final DatabaseReference _userRef = FirebaseDatabase.instance.ref(
+      "users/${widget.userId}" // <-- Dynamic path
+  );
 
   final MapController _mapController = MapController();
   LatLng? _currentPosition;
@@ -23,14 +32,11 @@ class _MapScreenState extends State<MapScreen> {
 
   final List<Map<String, dynamic>> _savedLocations = [];
 
-  // --- New Travel State Variables ---
-  final _userRef = FirebaseDatabase.instance.ref("users/user1");
   Map<String, dynamic>? _activeTravel; // current travel info
   DateTime? _startTime;
   String? _selectedDestinationId;
   bool _canCheckIn = false;
   StreamSubscription<Position>? _positionStream;
-  // ----------------------------------
 
   @override
   void initState() {

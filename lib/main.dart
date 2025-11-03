@@ -1,32 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fyp/screens/map_screen.dart';
-import 'firebase_options.dart';
-import 'screens/splash_screen.dart';
-import 'screens/login_screen.dart';
+import 'screens/splash_screen.dart'; // Adjust path
+import 'screens/login_screen.dart';  // Adjust path
+import 'screens/map_screen.dart';    // Adjust path
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const FamilyTrackerApp());
+  await Firebase.initializeApp(); // Initialize Firebase core
+  runApp(const MyApp());
 }
 
-class FamilyTrackerApp extends StatelessWidget {
-  const FamilyTrackerApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Family Safety Tracker',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashScreen(), // Start with the splash screen
+      title: 'GPS Tracker',
+      // Start the app with the Splash Screen
+      initialRoute: '/',
       routes: {
-        '/home': (context) => MapScreen(),
+        '/': (context) => const SplashScreen(),
+
+        // Login Screen Route
+        '/login': (context) => const LoginPage(),
+
+        // Map Screen Route (Requires argument)
+        '/map': (context) {
+          // Get the UID passed from the SplashScreen
+          final uid = ModalRoute.of(context)!.settings.arguments as String?;
+
+          // Fallback check: If the user ID is somehow missing, redirect to login
+          if (uid == null) {
+            // Optional: You could redirect back to login here for safety
+            return const LoginPage();
+          }
+
+          // Pass the required userId to the MapScreen
+          return MapScreen(userId: uid);
+        },
+
+        // '/register': (context) => const RegisterPage(), // Optional: Add if needed
       },
     );
   }
